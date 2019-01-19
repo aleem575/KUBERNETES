@@ -1,0 +1,76 @@
+*configmaps and pods should be in same namespace, first create config maps and then create pods/deployments
+
+
+
+1. vi ConfigMap.yml
+=======================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: weathervariable--------------------------------->name of the configmap
+  namespace: default
+data:----------------------------------------------->this refers to configuration data
+  weather: summer
+  today: hot------------------------------------------>key value
+  tomorrow: mild
+
+=======================================================================
+
+
+2. to create a configmap
+   #kubectl create -f ConfigMap.yml
+
+
+3. to see/list configmap
+   #kubectl get configmaps NameOfTheConfigMap
+
+
+4. to know more deatils about namespace
+   #kubectl describe configmaps NameOfTheConfigMap
+
+
+5. to deletea key configmaps
+   #kubectl edit configmap NameOfTheConfigMaps
+
+
+
+6. now reference kubernetes config maps in container
+ 
+ 
+7. vi Deloyment.yml
+==================================================================================
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: Cmdeploy
+    spec:
+      containers:
+      - name: containercm1
+        image: nginx
+        ports:
+        - containerPort: 80
+        envFrom:---------------------------------------------------->we are referencing configmaps in depolyments
+          - configMapRef:
+              name: weathervariable
+
+===================================================================================
+
+
+8. create deployment object
+   #kubectl create -f Deployment.yml
+
+
+9. now check pods
+   #kubectl get pods
+
+
+10. now attach to the pod
+    #kubectl exec PodName env

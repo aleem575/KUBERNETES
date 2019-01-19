@@ -1,0 +1,76 @@
+1. vi Deployment.yml
+
+=================================================================================
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-deployment------------------------------------------>deployment name is nginx
+spec:
+  replicas: 3------------------------------------->how many replicas you need
+  strategy:
+     type: RollingUpdate--------------------------------------->type of deployment strategy
+     rollingUpdate:
+       maxSurge: 2----------------------------------------------------->how many pods we can add at a time
+       maxUnavailable: 0---------------------------------->how many pods can be unavailable during the rolling update
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: k8s-demo
+        image: wardviaene/k8s-demo--------------------------------------------------->docker image
+        ports:
+        - name: nodejs-port
+          containerPort: 3000------------------------------------------------------------->container port
+=================================================================================
+
+
+2. to create a deployment
+   #kubectl create -f Deployment.yml
+
+
+3. to see/list deployments
+   #kubectl get deployments
+
+
+4. to know more deatils about deployment
+   #kubectl describe deployment NameOfTheDeployment
+
+
+5. to delete a deployment
+   #kubectl delete deployment NameOfTheDeployment
+
+
+6. to see the history of deployments
+   #kubectl rollout history deployments NameOfTheDeployment
+
+
+7. updating deployment with new image
+   #kubectl set image deployment/NameOfTheDeployment image=newimage
+   ex:-kubectl set image deployment/deployment-example nginx=nginx:1.9.2
+   *nginx image is updated from 1.9.2 to 1.9.9, now two repliacsets will be created without disruting service
+
+
+8. rollback to the previous image
+   #kubectl rollout undo deployment/NameOfTheDeployment
+   ex:-kubectl set image deployment/deployment-example nginx=nginx:1.9.2 (or) kubectl rollout undo deployment/nginx
+
+
+9. scaling the pods using deployment controller object
+   #kubectl scale --replicas=n deployment/NameOfTheDeployment
+   ex:-kubectl scale --replicas=4 deployment/deployment-example
+
+
+10. pausing deployment(someties we need to update image or make some changes we pause deployment)
+    #kubectl rollout pause deployment/NameOfTheDeployment
+    ex:-kubectl rollout pause deployment/deployment-example
+
+11. resume the deployment(while we pause the deployment, pods will still run but new changes are not affceted untill you resume it)
+    #kubectl rollout resume deployment/NameOfTheDeployment
+    ex:-kubectl rollout resume deployment/deployment-example
+
+
+12. to see replicasets
+   #kubectl get replicasets

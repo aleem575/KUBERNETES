@@ -1,0 +1,34 @@
+ after pv, then create pvc
+
+1. vi Pvc.yml
+=======================================================================
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath-------------------->Name of the Pvc
+spec:
+  #storageClassName: fast----------------->mentioning the StorageClassName if you want dynamic provisoning
+  accessModes:
+    - ReadWriteOnce-------------->should match pv
+  resources:
+    requests:
+      storage: 100Mi----------------->requesting storage of 100mb
+
+========================================================================
+
+
+2. to create a pvc
+   #kubectl create -f Pvc.yml
+
+
+3. to see/list pvc
+   #kubectl get pvc
+
+
+4. to know more deatils about pvc
+   #kubectl describe pods NameOfThePvc
+
+
+5. to delete a pvc
+   #kubectl delete pod NameOfThePvc

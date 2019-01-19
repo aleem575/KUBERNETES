@@ -1,0 +1,37 @@
+1. vi Ds.yml
+=======================================================================
+#we are using fluentd in daemon set
+apiVersion: "apps/v1"
+kind: DaemonSet
+metadata:
+  name: fluentd-ds------------------------->Name of the daemonset
+spec:
+  template:--------------------------------------------->this is a pods template
+    metadata:
+      labels:
+        name: fluentd---------------------->label and selector should match
+    spec:
+      containers:
+      - name: fluentd
+        image: gcr.io/google-containers/fluentd-elasticsearch:1.20
+   selector:
+     matchLabels:
+       name: fluentd------------------------------>label and selector should match
+
+========================================================================
+
+
+2. to create a daemonsets
+   #kubectl create -f Ds.yml
+
+
+3. to see/list daemonsets 
+   #kubectl get ds
+
+
+4. to know more deatils about daemonset
+   #kubectl describe ds NameOfTheDaemonSet
+
+
+5. to delete a Daemonset
+   #kubectl delete ds NameOfTheDaemonset

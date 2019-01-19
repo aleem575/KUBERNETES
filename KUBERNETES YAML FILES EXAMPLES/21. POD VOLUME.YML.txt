@@ -1,0 +1,62 @@
+1. vi Pod-vol.yml
+=======================================================================
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 600"]
+    volumeMounts:---------------------->inside the containers you have
+    - name: host-volume---------------->volume mount and volumes name should match
+      mountPath: /mydata----------->/mydata is directory inside container
+  volumes:
+  - name: host-volume--------------------->any name 
+    persistentVolumeClaim:-------------------->referncing pvc details in pod
+      claimName: pvc-hostpath--------------------->should match pvc name
+
+*your /mydata is mounted to /tmp/kube in pv whatever data you write to /mydata that will be ultimately saved in /tmp/kube
+of the node in which pv is scheduled if it host path else all pv data will be in nfs storage
+
+========================================================================
+
+
+2. to create a pod
+   #kubectl create -f Pod.yml
+
+
+3. to see/list pods 
+   #kubectl get pods
+
+
+4. to know more deatils about pod
+   #kubectl describe pods NameOfThePod
+
+
+5. to delete a pod
+   #kubectl delete pod NameOfThePod
+
+
+6. to see pods in all namespaces
+   #kubectl get pods --all-namespaces
+
+
+7. to see logs of a pod
+   #kubectl log PodName
+
+
+8. to see pod ip and node
+   #kubectl get pod -o wide
+
+
+9. exec into pod
+   #kubectl exec -it PodName -- /bin/sh
+   #cd /mydata
+   #touch hello-world
+   exit to come out of it
+
+now check in /tmp/data in which pv got scheduled

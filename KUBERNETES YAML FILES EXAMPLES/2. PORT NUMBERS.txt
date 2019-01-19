@@ -1,0 +1,35 @@
+KUBERNETES PORT NUMBERS:-
+==========================
+
+A) MASTER NODE PORTS
+
+1. 6443 = kubernetes api server
+ 
+2. 2379-2380 = etcd 
+
+3. 10250 = kubelet
+
+4. 10251 = kube-scheduler
+
+5. 10252 = kube-controll-manager
+
+6. 10255 = readonly kubelet api
+
+7. 8080 = kubectl
+
+
+
+B) NODE PORTS
+
+1. 10250 = kubelet api
+
+2. 10255 = readonly kubelet api
+
+3. 30000-32767 = nodeport service
+
+
+
+
+C) OTHER K8 PORTS
+
+1. 80/443/9090 = ui

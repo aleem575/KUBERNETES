@@ -1,0 +1,31 @@
+1. ApiVersion = every object has a version number, so api version defines which object has which version number
+   
+   #) kubernetes has 3 API versions
+      a) Alpha = work in progress without any gaurantee
+      b) Beta = well tested feature wont be dropped, but features may change
+      c) Stable = production ready and will available in future
+
+we have like this alpha----------->beta------------>stable
+
+
+
+2. Kind = it describes what object to create
+          Ex:- if you want to create pod your kind wil be pod
+               if you want to create service your kind will be service
+         
+
+
+
+3. Metadata = data about object
+              Ex:- if kind is pod, we have something like pod name, pod lables, env
+  
+   #)we add following metadata keys to the objects
+     a) Labels
+     b) Name
+     c) Namespace
+     d) Annotation
+
+
+
+4. Spec = in this section we mention container image, port, name...............
+   

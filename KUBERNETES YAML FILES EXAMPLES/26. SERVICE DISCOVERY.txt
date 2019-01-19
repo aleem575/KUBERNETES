@@ -1,0 +1,9 @@
+1. exec into a container and check /etc/resolv.conf it will point to kube-dns 
+   #cat /etc/resolv.conf
+
+
+2. exec into container and check following command to see if it resolving or not
+   #host servicename-service------------------------------------------------------>you should see ip adress
+   (or)
+   #host servicename.namespace.svc.cluster
+   

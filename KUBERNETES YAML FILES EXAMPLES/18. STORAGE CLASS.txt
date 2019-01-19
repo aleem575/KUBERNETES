@@ -1,0 +1,33 @@
+1. vi sc.yml
+=======================================================================
+
+apiVersion: storage.k8s.io/v1--------------------------------------->api version of storage class
+kind: StorageClass
+metadata:
+  name: fast--------------------------------------->NameOfTheStorageClass
+provisioner: kubernetes.io/aws-ebs---------------------------->Here ebs is volume plugin, incase volume plugin is gce then provisoner will be kubernetes.io/gce-pd
+parameters:
+  type: io1
+  zone: us-east-1d
+  iopsPerGB: "10"
+
+========================================================================
+
+
+2. to create a storage class
+   #kubectl create -f sc.yml
+
+
+3. to see/list StorageClass 
+   #kubectl get storageclass
+
+
+4. to know more deatils about StorageClass
+   #kubectl describe storageclass NameOfTheStorageClass
+
+
+5. to delete a StorageClass
+   #kubectl delete torageclass NameOfTheStorageClass
+
+
+

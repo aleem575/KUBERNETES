@@ -1,0 +1,43 @@
+1. vi Job.yml
+=======================================================================
+
+apiVersion: "batch/v1"
+kind: Job
+metadata:
+  name: countdown------------------------->assigining name for job
+spec:
+  template:------------------------------------------>pod template
+    metadata:
+      name: countdown------------>pod name
+    spec:  
+      containers:
+      - name: couter----------------------->assign any name to the container
+        image: centos:7-------------------->docker image
+        command:
+         - "bin/bash"
+         - "-c"
+         - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
+    restartPolicy: Never--------------------------------------->if container is killed then it wont restart
+
+#once the job exceutes numbers from 9 to 1 then pod will be terminated
+========================================================================
+
+
+2. to create a jobs
+   #kubectl create -f Job.yml
+
+
+3. to see/list jobs
+   #kubectl get jobs
+
+
+4. to know more deatils about job
+   #kubectl describe jobs NameOfTheJob
+
+
+5. to delete a job
+   #kubectl delete jobs NameOfTheJob
+
+
+6. to see jobs output
+   #kubectl logs PodName

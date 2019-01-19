@@ -1,0 +1,1 @@
+#kubectl drain nodename --grace-period=timeinseconds

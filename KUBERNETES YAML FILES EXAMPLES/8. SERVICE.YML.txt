@@ -1,0 +1,42 @@
+1. vi Service.yml
+====================================================================================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx---------------------------------------------------->service name is nginx
+  labels:
+    app: nginx
+  namespace: development----------------------------------------------->service will be created in this namespace
+spec:
+  selector:
+    app: nginx---------------------------------------------------->will route request to pods only if service selector and lables match
+  type: NodePort------------------------------------type of service(clusterip, loadbalncer, nodeport)
+  ports:
+  - nodePort: 30500
+    port: 80---------------------------------------------->if there are 2 container ports in deployment then in service we have 2 ports
+    protocol: TCP
+    targetPort: 80
+
+====================================================================================================================
+
+
+2. to create a service
+   #kubectl create -f Service.yml
+
+
+3. to see/list service
+   #kubectl get svc
+
+
+4. to know more deatils about service
+   #kubectl describe svc NameOfTheService
+
+
+5. to delete a service
+   #kubectl delete svc NameOfTheService
+
+
+6. how to expose service using a node port
+   #check where the pod is running and copy the node ipadress
+   #http://nodeip:nodeport

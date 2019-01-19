@@ -1,0 +1,52 @@
+=========================
+KUBERNETES CRITICAL FILES:-
+=========================
+0*. ~/.kube/config--------------------the file allows you to connect to kubernetes cluster, the configuration information
+                                      present in kube-config file allows kubernetes clients talk to apiserver. 
+                                      *kubectl command uses this file. kubectl operation(kubectl get pods) occur in the namespace of
+                                       kube-config
+
+
+1*. /etc/kubernetes/----------------------------------------config folder
+
+
+2*. /var/lib/docker-----------------------------------------docker working dir
+
+
+3*. /var/lib/kubelet/---------------------------------------kubernets working dir
+
+
+4*. /var/log/pods-------------------------------------------log files
+
+
+5*. /etc/kubernetes/kubelet.conf----------------------------credentials to API server
+
+
+6. /var/log/containers	
+
+
+7. /etc/kubernetes/pki/------------------------------------certificate files
+
+
+8. /etc/cni/net.d------------------------------------------network cni
+
+
+9. /var/lib/etcd	
+
+
+10. /etc/kubernetes/admin.conf------------------------------superuser credentials
+
+
+11. /etc/kubernetes/addons------------addons(dns)
+
+
+12. /etc/systemd/system/kubelet.service.d/10-kubeadm.conf---env
+
+
+13. kubelet logS--------------------------------------------logs 
+
+
+14. export KUBECONFIG=/etc/kubernetes/admin.conf------------env
+
+
+15. /usr/local/bin/kubectl-------------------kubectl path

@@ -1,0 +1,26 @@
+1. vi NameSpace.yml
+=======================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development------------------>"development" is name of namespace
+  labels:
+    name: development
+=======================================================================
+
+
+2. to create a namespace
+   #kubectl create -f NameSpace.yml
+
+
+3. to see/list namespace 
+   #kubectl get namespace
+
+
+4. to know more deatils about namespace
+   #kubectl describe namespace NameOfTheNameSpace
+
+
+5. to delete a namespace
+   #kubectl delete namespace NameOfTheNameSpace

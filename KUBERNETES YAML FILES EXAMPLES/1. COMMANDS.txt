@@ -1,0 +1,160 @@
+==============
+KEY CONCEPTS:-
+==============
+CRI	Container Runtime Interface
+CNI	Container Network Interface
+CSI	Container Storage Interface
+CNCF	Cloud Native Computing Foundation
+
+
+
+=======================
+CLUSTER INTROSPECTION:-
+=======================
+kubectl get services --all-namespaces	              #List all services for all namespaces
+kubectl get nodes -w                                  #Watch nodes continuously
+kubectl version                                       #Get version information
+kubectl cluster-info                                  #Get cluster information
+kubectl config view                     	      #Get the configuration
+kubectl describe node <node>            	      #Get node status
+kubectl get componentstatus                           #Get component status
+kubectl get svc			                      #Get services for current namespace
+kubectl -n kube-system get cm kubeadm-config -oyaml   #Get system conf
+curl -L http://127.0.0.1:10250/healthz                #Query healthcheck endpoin
+
+
+
+================================
+PODS & CONTAINER INTROSPECTION:-
+================================
+kubectl get pods                         #List all pods
+kubectl describe pod <name>              #Describe pod <name>
+kubectl get pod -o wide			 #List pods with node info attached
+kubectl get -n kube-system pods -a	 #List all critical pods
+kubectl describe pod <pod name>          #Get pod info
+kubectl label pods labelex owner=xxx	 #Add label to pod
+kubectl get pods --selector owner=xxx	 #Filter pod by label
+kubectl get pods --show-labels		 #List all pods with labels
+kubectl delete pod <podname>		 #Delete pod
+
+
+
+=======================
+INTERACTING WITH PODS:-
+=======================
+kubectl run <name> --image=<image-name>                             #Launch a pod called <name> using image <image-name>                                                                  
+kubectl create -f <manifest.yaml>                                   #Create a service described in <manifest.yaml> 
+kubectl scale --replicas=<count> rc <name>                          #Scale replication controller <name> to <count> instances 
+kubectl expose rc <name> --port=<external> --target-port=<internal> #Map port <external> to port <internal> on replication controller <name>
+
+
+
+==============================
+INTERACTING WITH RUNNING PODS:-
+==============================
+kubectl logs <pod-name>					#dump pod logs (stdout)
+kubectl run -i --tty busybox --image=busybox -- sh	#run pod as interactive shell
+kubectl attach <podname> -i 				#Attach to Running Container
+kubectl port-forward <podname> <local-and-remote-port>  #Forward port of Pod to your local machine
+kubectl port-forward <servicename> <port>		#Forward port to service
+kubectl exec <pod-name> -- ls /				#Run command in existing pod (1 container case)
+kubectl exec <pod-name> -c <container-name> -- ls /     #Run command in existing pod (multi-container case)	
+
+
+
+=======================
+SERVICE INTROSPECTION:-
+=======================
+kubectl get services				#List all services
+kubectl delete service <svcname>		#Delete service
+kubectl get svc                         	#List the services
+kubectl describe svc <name>             	#Describe service <name>
+kubectl run hello --image=<imgname> --port=NN   #Start a service
+
+
+
+======================================
+REPLICATION CONTROLLER INTROSPECTION:-
+======================================
+kubectl get rc                           	#List the replication controllers
+kubectl get rc --namespace="<namespace>" 	#List the replication controllers in <namespace>
+kubectl describe rc <name>               	#Describe replication controller <name>
+kubectl delete rc <name>		 	#Delete replication controller
+kubectl get replicationcontroller <rc-name>	#List a particular RC	
+
+
+
+==========================
+DEPLOYMENT INTROSPECTION:-
+==========================
+kubectl get deploy						#Get deployment info
+kubectl rolling-update app-v1 app-v2 --image=img:v2		#online rolling upgrade
+kubectl rolling-update app-v1 app-v2 --rollback			#Roll backup
+kubectl rollout status deployment/nginx-app			#Check update status
+kubectl rollout history deployment/nginx-app			#Check update history
+
+
+=====================
+SCALE INTROSPECTION:-
+=====================
+kubectl scale --replicas=N deployment/nginx-app			#Scale up and down
+
+
+
+=====================
+SECRET INTROSPECTION:-
+=====================
+kubectl create -f filename.yml			#to create secret manifest file
+
+
+
+=====================
+VOLUME INTROSPECTION:-
+=====================
+kubectl describe pv pv0001			#Check persist volume
+kubectl exec storage ls /data			#Check the mounted volumes
+
+
+            
+====================
+STOPPING KUBERNETES:-
+====================                                                
+kubectl delete pod <name>                                         # Delete pod <name>
+kubectl delete rc <name>                                          # Delete replication controller <name>
+kubectl delete svc <name>                                         # Delete service <name>
+kubectl drain <n> --delete-local-data --force --ignore-daemonsets # Stop all pods on <n>
+kubectl delete node <name>                                        # Remove <node> from the cluster
+
+
+
+================
+ADMINISTRATION:-
+================ 
+kubeadm init                                              # Initialize your master node
+kubeadm join --token <token> <master-ip>:<master-port>    # Join a node to your Kubernetes cluster
+kubectl create namespace <namespace>                      # Create namespace <name>
+kubectl taint nodes --all node-role.kubernetes.io/master- # Allow Kubernetes master nodes to run pods
+kubeadm reset                                             # Reset current state
+kubectl get secrets                                       # List all secrets
+
+
+=========================
+MINIKUBE ADMINISTRATION:-
+=========================
+minikube start			#start minikube env
+minikube dashboard		#get dashboard
+minikube ssh			#ssh to minikube
+minikube ip			#get ip
+minikube addons list		#list addons
+minikube service $srv_name	#Get service info
+
+
+
+===========
+DEBUGGING:-
+=========== 
+kubectl exec <service> <command> [-c <$container>] # execute <command> on <service>, optionally selecting container <$container>
+kubectl logs -f <name> [-c <$container>]           # Get logs from service <name>, optionally selecting container <$container>
+watch -n 2 cat /var/log/kublet.log                 # Watch the Kublet logs
+kubectl top node                                   # Show metrics for nodes
+kubectl top pod                                    # Show metrics for pods

@@ -1,0 +1,48 @@
+#first create pv
+
+0. create /tmp/kube on all nodes in case of hostpath generally not used hostath in production
+   #mkdir /tmp/kube
+
+
+1. vi Pv.yml
+=======================================================================
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath----------------------->name of persistent volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+ #persistentVolumeReclaimPolicy: Delete------------->pv will be automatically deleted when you delte pvc 
+  capacity:
+    storage: 1Gi------------------->how much pv you want to provison
+  accessModes:
+    - ReadWriteOnce-------------------------->for nfs accessmode should be readwrite many
+  hostPath:
+    path: "/tmp/kube"-------------------->in this directory your data will be saved ultimately
+ #nfs:--------------------------------------------------------------------->incase you want to use nfs in pv
+    server: "xx.yy.zz.aa"------------------->nfs-server-ip or hostname
+    path: "/data"------------------->path of nfs server
+
+========================================================================
+
+
+2. to create a pv
+   #kubectl create -f Pv.yml
+
+
+3. to see/list pv
+   #kubectl get pv
+
+
+4. to know more deatils about pv
+   #kubectl describe pods NameOfThePv
+
+
+5. to delete a pv
+   #kubectl delete pod NameOfThePv
+
+
+even if you delete pv, pvc, pod then still yuor data exists

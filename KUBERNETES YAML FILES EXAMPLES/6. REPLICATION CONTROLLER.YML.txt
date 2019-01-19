@@ -1,0 +1,43 @@
+1. vi ReplicationController.yml
+=======================================================================================
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: helloworld-controller-------------------------------------------------------->replication controller name
+spec:
+  replicas: 2----------------------------------->how many pods you want
+  selector:
+    app: helloworld
+  template:---------------------------------------------------------------->pod template
+    metadata:
+      labels:
+        app: helloworld-------------------------------------------->pod name
+    spec:
+      containers:
+      - name: k8s-demo
+        image: wardviaene/k8s-demo
+        ports:
+        - name: nodejs-port
+          containerPort: 3000
+=======================================================================================
+
+
+
+2. to create a pod
+   #kubectl create -f ReplicationController.yml
+
+
+3. to see/list rc 
+   #kubectl get rc
+
+
+4. after editing rcfile and make changes effective
+   #kubectl apply -f rcfilename
+
+
+5. to know more details about rc
+   #kubectl describe rc NameOfTheRC
+
+
+6. to delete a rc
+   #kubectl delete rc NameOfTheRC

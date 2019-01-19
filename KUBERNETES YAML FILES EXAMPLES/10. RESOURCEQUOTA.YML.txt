@@ -1,0 +1,80 @@
+1. vi ResourceQuota.yml
+====================================================================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: myspace
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: myspace
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: object-quota
+  namespace: myspace
+spec:
+  hard:
+    configmaps: "10"
+    persistentvolumeclaims: "4"
+    replicationcontrollers: "20"
+    secrets: "10"
+    services: "10"
+    services.loadbalancers: "2"
+
+====================================================================================================================
+
+1. vi deployment-resourcequoata.yml
+=======================================================================================================================
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+  namespace: myspace
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: k8s-demo
+        image: wardviaene/k8s-demo
+        ports:
+        - name: nodejs-port
+          containerPort: 3000
+        resources:
+          requests:
+            cpu: 200m
+            memory: 0.5Gi
+          limits:
+            cpu: 400m
+            memory: 1Gi
+========================================================================================================================
+
+2. to create a resourcequoata
+   #kubectl create -f ResourceQuota.yml
+
+
+3. to see/list resourcequoata
+   #kubectl get resourcequota
+
+
+4. to know more deatils about resourcequota
+   #kubectl describe resourcequota -n NameOfTheNameSpace
+
+
+5. to delete a resourcequota
+   #kubectl delete resourcequota NameOfTheResourceQuota

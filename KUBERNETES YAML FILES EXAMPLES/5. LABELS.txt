@@ -1,0 +1,32 @@
+vi label.yml
+----------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testing-service
+  labels:
+    env: dev
+spec:
+  containers:
+    - name: test-ser
+      image: docker.io/jagadesh1982/testing-service
+      ports:
+      - containerPort: 9876
+
+----------------------------------------------------------
+
+
+1. to see the label for a pod
+   #kubectl get pods --show-labels
+
+
+2. attach a label to running pod
+   #kubectl label pod testing-service owner=kube
+
+
+3. to see pods which have same label(say env=dev)
+   #kubectl get pods -l env=dev
+
+
+4. to show all pods with labels
+   # kubectl get pods --show-labels	
